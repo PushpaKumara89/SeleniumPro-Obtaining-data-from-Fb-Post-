@@ -1,26 +1,26 @@
-package sampleapp.model;
+package sampleapp.dto;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Post {
+public class PostDTO {
     private int no;
     private String time;
     private String post_by;
     private String massage;
     private ArrayList<String> imgURL;
 
-    public Post() {
+    public PostDTO() {
     }
 
-    public Post(String time, String post_by, String massage, ArrayList<String> imgURL) {
+    public PostDTO(String time, String post_by, String massage, ArrayList<String> imgURL) {
         this.setTime(time);
         this.setPost_by(post_by);
         this.setMassage(massage);
         this.setImgURL(imgURL);
     }
 
-    public Post(int i, String time, String post_by, String massage, ArrayList<String> imgURL) {
+    public PostDTO(int i, String time, String post_by, String massage, ArrayList<String> imgURL) {
         this.setNo(i);
         this.setTime(time);
         this.setPost_by(post_by);
@@ -41,9 +41,9 @@ public class Post {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Post)) return false;
-        Post post = (Post) o;
-        return getPost_by().equals(post.getPost_by()) && getMassage().equals(post.getMassage());
+        if (!(o instanceof PostDTO)) return false;
+        PostDTO postDTO = (PostDTO) o;
+        return getPost_by().equals(postDTO.getPost_by()) && getMassage().equals(postDTO.getMassage());
     }
 
     @Override

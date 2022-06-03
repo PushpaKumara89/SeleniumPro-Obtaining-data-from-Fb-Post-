@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import sampleapp.views.ViewFactory;
 
 import java.io.IOException;
 
@@ -21,7 +22,7 @@ public class AppInitializer extends Application {
         primaryStage.getIcons().add(image);
         primaryStage.setMaximized(true);
         primaryStage.setTitle("Scrap");
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("views/TableView.fxml"))));
+        primaryStage.setScene(new Scene(ViewFactory.getInstance().get("TableView")));
         primaryStage.show();
     }
 }

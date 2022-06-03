@@ -3,7 +3,7 @@ package sampleapp.service.operaterFb;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import sampleapp.model.Post;
+import sampleapp.dto.PostDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class FB {
     private static By x_videoUrl2 = By.xpath("//div[@class='mtm']/div");
 
     //-------------------------------execute selected page type---------------------------------------------------
-    public static ArrayList<Post> getWebElements(WebDriver driver) {
+    public static ArrayList<PostDTO> getWebElements(WebDriver driver) {
 
         WebElementsFB elementsT1 = new WebElementsFB(driver.getTitle(),
                 driver.findElements(x_massages_type1),
@@ -36,19 +36,19 @@ public class FB {
                 driver.findElements(x_timeDate_type2),
                 driver.findElements(x_videoUrl2)
         );
-        ArrayList<Post> posts=null;
+        ArrayList<PostDTO> postDTOS =null;
         if (elementsT1.is_verified()){
-            posts = getList(elementsT1,driver.getTitle());
+            postDTOS = getList(elementsT1,driver.getTitle());
 
         }if(elementsT2.is_verified()){
-            posts = getList(elementsT2,driver.getTitle());
+            postDTOS = getList(elementsT2,driver.getTitle());
         }
-        return posts;
+        return postDTOS;
     }
 
     //---------------------------------get Cra
-    private static ArrayList<Post> getList(WebElementsFB element, String title) {
-        ArrayList<Post> posts = new ArrayList<>();
+    private static ArrayList<PostDTO> getList(WebElementsFB element, String title) {
+        ArrayList<PostDTO> postDTOS = new ArrayList<>();
         for (int i = 0; i < element.getText().size(); i++) {
             List<WebElement> img = element.getImgUrl().get(i).findElements(By.tagName("img"));
             ArrayList<String> imgs = new ArrayList<>();
@@ -56,8 +56,8 @@ public class FB {
                 imgs.add(img.get(j).getAttribute("src"));
             }
             String postTime = DataAndTimeFB.getDateFormat(element.getDate().get(i).getText());
-            posts.add(new Post(postTime,title, element.getText().get(i).getText(),imgs));
+            postDTOS.add(new PostDTO(postTime,title, element.getText().get(i).getText(),imgs));
         }
-        return posts;
+        return postDTOS;
     }
 }

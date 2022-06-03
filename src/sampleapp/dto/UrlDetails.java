@@ -1,4 +1,4 @@
-package sampleapp.model;
+package sampleapp.dto;
 
 public class UrlDetails {
     private String url;

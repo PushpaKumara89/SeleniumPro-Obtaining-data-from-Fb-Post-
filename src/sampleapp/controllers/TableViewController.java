@@ -16,10 +16,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sampleapp.model.Post;
+import sampleapp.dto.PostDTO;
 import sampleapp.service.operaterFb.FaceBookPagePostAutomate;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class TableViewController {
 
 
     Stage stage;
-    public TableView<Post> tblPostTableView;
+    public TableView<PostDTO> tblPostTableView;
 
     public TableColumn colCount;
     public TableColumn colPostDataTime;
@@ -41,7 +42,7 @@ public class TableViewController {
     public TableColumn colMassage;
     public TextField txtUrl;
 
-    Set<Post> posts;
+    Set<PostDTO> postDTOS;
 
     public void initialize(){
         setDate();
@@ -76,16 +77,16 @@ public class TableViewController {
         txtDate.setText(DateTimeFormatter.ofPattern("dd/MM/yyyy  HH:mm:ss").format(LocalDateTime.now()));
     }
 
-    private void loadWindowURL(Post newPost) throws IOException {
+    private void loadWindowURL(PostDTO newPostDTO) throws IOException {
 
-        if (newPost.getImgURL().size()==0){
+        if (newPostDTO.getImgURL().size()==0){
             new Alert(Alert.AlertType.INFORMATION, "img files not available this........").show();
             return;
         }
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/UrlView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../views/UrlView.fxml"));
         Parent parent = fxmlLoader.load();
         UrlViewController controller = fxmlLoader.getController();
-        controller.dataTransfer(newPost);
+        controller.dataTransfer(newPostDTO);
         Image image= new Image("assets/icon.png");
         if (stage == null){
             stage = new Stage();
@@ -97,11 +98,14 @@ public class TableViewController {
         stage.show();
     }
 
-
     private void loadTable(String txt) {
-        posts = FaceBookPagePostAutomate.getLoadPost(txt);
-        ObservableList<Post> list = FXCollections.observableArrayList();
-        for (Post p: posts ) {
+        try {
+            postDTOS = FaceBookPagePostAutomate.getLoadPost(txt);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        ObservableList<PostDTO> list = FXCollections.observableArrayList();
+        for (PostDTO p: postDTOS) {
             list.add(p);
         }
         tblPostTableView.setItems(list);
@@ -118,7 +122,7 @@ public class TableViewController {
         }
         txtUrl.setEditable(false);
         try {
-            if (FaceBookPagePostAutomate.newPostSave(posts,fbUrl)){
+            if (FaceBookPagePostAutomate.newPostSave(postDTOS,fbUrl)){
                 System.out.println();
             }
         } catch (InterruptedException e) {
@@ -135,8 +139,12 @@ public class TableViewController {
         Stage stage = (Stage) anpDashContext.getScene().getWindow();
         if (!stage.isFullScreen()){
             stage.setFullScreen(true);
+            Image img = new Image("assets/exitFullS.png");
+            imgFullScreen.setImage(img);
         }else {
             stage.setFullScreen(false);
+            Image img = new Image("assets/fullS.png");
+            imgFullScreen.setImage(img);
         }
     }
 }

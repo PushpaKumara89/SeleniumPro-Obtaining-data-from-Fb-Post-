@@ -3,39 +3,30 @@ package sampleapp.service.operaterFb;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import sampleapp.db.DBConnection;
-import sampleapp.model.Post;
+import sampleapp.bo.BoFactory;
+import sampleapp.bo.custom.FbPostBo;
+import sampleapp.dto.PostDTO;
 
 import java.sql.*;
 import java.util.*;
 
 public class FaceBookPagePostAutomate {
-    private static Set<Post> previousPost =null;
+    private static Set<PostDTO> previousPostDTO =null;
+    private static FbPostBo bo = (FbPostBo) BoFactory.getInstance().getBo(BoFactory.BoType.FB_POSTS);
 
-    public static Set<Post> getLoadPost(String txt) {
-        previousPost = new LinkedHashSet<>();
-        try {
-            PreparedStatement pst = DBConnection.getInstance().getConnection().prepareStatement("SELECT * FROM post WHERE post_by LIKE '%"+txt+"%' OR massage LIKE '%"+txt+"%'");
-            ResultSet rst = pst.executeQuery();
-            for (int i = 0; rst.next(); i++) {
-                PreparedStatement pst1 = DBConnection.getInstance().getConnection().prepareStatement("SELECT url FROM post_url WHERE post_id=?");
-                pst1.setObject(1,rst.getInt(1));
-                ResultSet rst1 = pst1.executeQuery();
-                ArrayList<String> list = new ArrayList<>();
-                while (rst1.next()){
-                    list.add(rst1.getString(1));
-                }
-                previousPost.add(new Post((i+1),rst.getString(2),rst.getString(3),rst.getString(4),list));
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e);
+    public static Set<PostDTO> getLoadPost(String txt) throws SQLException, ClassNotFoundException {
+        previousPostDTO=new LinkedHashSet<>();
+        ArrayList<PostDTO> allPost = bo.getAllPost("");
+        for (int i = 0; i < allPost.size(); i++) {
+            PostDTO dto=allPost.get(i);
+            dto.setNo(i+1);
+            previousPostDTO.add(dto);
         }
-        return previousPost;
+        return previousPostDTO;
     }
     //-----------------------------------------------------------------
 
-    public static boolean newPostSave(Set<Post> loadPost,String url) throws InterruptedException {
+    public static boolean newPostSave(Set<PostDTO> loadPostDTO, String url) throws InterruptedException {
 
         System.setProperty("webdriver.chrome.driver", "E:\\pushpakumara\\Wixis\\SeleniumPro\\lib\\chromedriver.exe");
 
@@ -86,69 +77,26 @@ public class FaceBookPagePostAutomate {
         }
         //--------------------------if see more .................................................
 
-        LinkedList<Post> posts =new LinkedList<>();
-        ArrayList<Post> webElements = FB.getWebElements(driver);
+        LinkedList<PostDTO> postDTOS =new LinkedList<>();
+        ArrayList<PostDTO> webElements = FB.getWebElements(driver);
 
         for (int i = 0; i < webElements.size(); i++) {
-            if (loadPost.add(webElements.get(i))){
-                posts.add(webElements.get(i));
+            if (loadPostDTO.add(webElements.get(i))){
+                postDTOS.add(webElements.get(i));
             }
         }
 
-        for (Post p: posts) {
+        for (PostDTO p: postDTOS) {
             System.out.println(p);
 
             try {
-                System.out.println(addPost(p));
-            } catch (SQLException | ClassNotFoundException throwables) {
-                throwables.printStackTrace();
+                System.out.println(bo.savePost(p));
+            } catch (SQLException | ClassNotFoundException e) {
+                System.out.println(e);
             }
         }
         return false;
         /* driver.quit();*/
-    }
-
-    private static boolean addPost(Post p) throws SQLException, ClassNotFoundException, InterruptedException {
-        Connection connection = DBConnection.getInstance().getConnection();
-        try {
-            connection.setAutoCommit(false);
-
-            PreparedStatement stm1 = connection.prepareStatement("INSERT INTO post values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            stm1.setObject(1, null);
-            stm1.setObject(2, p.getTime());
-            stm1.setObject(3, p.getPost_by());
-            stm1.setObject(4, p.getMassage());
-            Thread.sleep(100);
-            boolean isSave = stm1.executeUpdate() > 0;
-            System.out.println(isSave+"-------------------------");
-            if (isSave){
-                ResultSet key = stm1.getGeneratedKeys();
-                if (key.next()) {
-                    int post_id = key.getInt(1);
-                    boolean isAdd = addPost_url(post_id, p.getImgURL());
-                    if (isAdd) {
-                        connection.commit();
-                        return true;
-                    }
-                }
-            }
-            connection.rollback();
-            return false;
-        }finally {
-            connection.setAutoCommit(true);
-        }
-    }
-
-    private static boolean addPost_url(int post_id, ArrayList<String> imgURL) throws SQLException, ClassNotFoundException {
-        for (int i = 0; i < imgURL.size(); i++) {
-            PreparedStatement stm2 = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO post_url VALUES(?,?,?)");
-            stm2.setObject(1,null);
-            stm2.setObject(2,post_id);
-            stm2.setObject(3,imgURL.get(i));
-            boolean isAdd = stm2.executeUpdate()>0;
-            if(!isAdd)return false;
-        }
-        return true;
     }
 
 }
