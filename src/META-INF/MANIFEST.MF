@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: sampleapp.FaceBookPagePostAutomate
+Main-Class: sampleapp.service.operaterFb.FaceBookPagePostAutomate
 

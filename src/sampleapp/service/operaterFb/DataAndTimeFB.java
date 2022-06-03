@@ -1,13 +1,12 @@
-package sampleapp;
+package sampleapp.service.operaterFb;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Date;
 
-public class DataAndTime {
+public class DataAndTimeFB {
     public static String getDateFormat(String date){
         try {
             String[] dateCondition ={"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November" , "December"};
@@ -25,7 +24,8 @@ public class DataAndTime {
                     return DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(ofDate);
 
                 }else if (date.contains("hrs")){
-                    int day=dat.getDate();
+                    int month = now.getMonth().getValue();
+                    int day= now.getDayOfMonth();
                     int hr=dat.getHours();
 
                     if (hr>Integer.parseInt(d[0])){
@@ -33,9 +33,17 @@ public class DataAndTime {
                     }else {
                         day--;hr+=(24-Integer.parseInt(d[0]));
                     }
+                    if (day<=0){
+                        day+=30;
+                        month--;
+                    }
 
-                    LocalDateTime ofDate = LocalDateTime.of(now.getYear(),now.getMonth(),day,hr,0);
+                    System.out.println(day);
+                    System.out.println(hr);
+
+                    LocalDateTime ofDate = LocalDateTime.of(now.getYear(),month,day,hr,0);
                     return DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(ofDate);
+
 
                 }else if (date.contains("mins")){
                     int minute=dat.getMinutes();

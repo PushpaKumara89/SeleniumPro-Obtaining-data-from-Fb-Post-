@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="500.0" prefWidth="985.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sampleapp.controllers.UrlViewController">
+   <children>
+      <TableView fx:id="tblUrl" layoutX="18.0" layoutY="53.0" prefHeight="435.0" prefWidth="945.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="53.0">
+         <columns>
+            <TableColumn fx:id="colUrl" prefWidth="944.0" text="Urls" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Text layoutX="18.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post By : " wrappingWidth="101.13671875" AnchorPane.leftAnchor="18.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtPostBy" layoutX="130.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="502.1181640625" AnchorPane.leftAnchor="130.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
