@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -10,13 +13,73 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anpDashContext" prefHeight="782.0" prefWidth="1242.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sampleapp.controllers.TableViewController">
+<AnchorPane fx:id="anpDashContext" prefHeight="827.0" prefWidth="1349.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sampleapp.controllers.TableViewController">
    <children>
-      <TextField fx:id="txtUrl" layoutX="68.0" layoutY="79.0" prefHeight="25.0" prefWidth="1056.0" AnchorPane.leftAnchor="68.0" AnchorPane.rightAnchor="118.0" />
-      <Text layoutX="23.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Url  : " wrappingWidth="34.322265625" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="1184.677734375" />
-      <Button layoutX="1246.0" layoutY="79.0" mnemonicParsing="false" onAction="#onScrap" text="Scrapping" AnchorPane.rightAnchor="33.814453125" />
-      <Text layoutX="23.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post Detais" wrappingWidth="151.322265625" AnchorPane.leftAnchor="23.0" />
-      <TableView fx:id="tblPostTableView" fixedCellSize="0.0" layoutX="20.0" layoutY="154.0" prefHeight="613.0" prefWidth="1313.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="154.0">
+      <TextField fx:id="txtUrl" layoutX="90.0" layoutY="79.0" prefHeight="25.0" prefWidth="1104.0" styleClass="text-field" stylesheets="@../../assets/Styles.css" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="155.0" />
+      <Text layoutX="20.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Page Url  : " wrappingWidth="60.99998466752004" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1268.13673408248" />
+      <Button layoutX="1233.0" layoutY="78.0" mnemonicParsing="false" onAction="#onScrap" prefHeight="27.0" prefWidth="114.0" styleClass="btn_main" stylesheets="@../../assets/Styles.css" text="S C R A P P I N G" AnchorPane.rightAnchor="22.0">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font></Button>
+      <Text layoutX="20.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post Detais" wrappingWidth="83.322265625" AnchorPane.leftAnchor="20.0" />
+      <Text layoutX="99.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F a c e B o o k  P o s t  S c r a p p i n g" wrappingWidth="557.13671875" AnchorPane.leftAnchor="99.0" AnchorPane.rightAnchor="693.0">
+         <font>
+            <Font name="Book Antiqua Bold" size="19.0" />
+         </font></Text>
+      <Text fx:id="txtDate" layoutX="1081.0" layoutY="22.0" nodeOrientation="LEFT_TO_RIGHT" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="177.13671875" AnchorPane.rightAnchor="91.0">
+         <font>
+            <Font name="Webdings" size="14.0" />
+         </font></Text>
+      <TextField fx:id="txtSearch" layoutX="90.0" layoutY="112.0" prefHeight="25.0" prefWidth="1104.0" styleClass="text-field" stylesheets="@../../assets/Styles.css" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="155.0" />
+      <Button layoutX="8.0" layoutY="3.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="69.0" styleClass="shadow" stylesheets="@../../assets/Styles.css" AnchorPane.leftAnchor="8.0">
+         <graphic>
+            <ImageView fitHeight="66.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/pngtree-facebook-logo-facebook-icon-png-image_3566127.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="1294.13671875" layoutY="1.0" mnemonicParsing="false" onAction="#onImgFullorExit" prefHeight="33.0" prefWidth="33.0" stylesheets="@../../assets/Styles.css" AnchorPane.rightAnchor="22.0">
+         <graphic>
+            <ImageView fx:id="imgFullScreen" fitHeight="17.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/fullS.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <styleClass>
+            <String fx:value="fullscreen" />
+            <String fx:value="shadow" />
+         </styleClass>
+      </Button>
+      <Button layoutX="1259.0" layoutY="2.0" mnemonicParsing="false" onAction="#onSetTime" prefHeight="33.0" prefWidth="33.0" stylesheets="@../../assets/Styles.css" AnchorPane.rightAnchor="57.13671875">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/timing.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </graphic>
+         <styleClass>
+            <String fx:value="timeBtn" />
+            <String fx:value="shadow" />
+         </styleClass>
+      </Button>
+      <Pagination fx:id="pngPagination" layoutY="152.0" prefHeight="663.0" prefWidth="1349.0" stylesheets="@../../assets/Styles.css" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="152.0" />
+      <TableView fx:id="tblPostTableView" fixedCellSize="0.0" layoutX="18.0" layoutY="164.0" prefHeight="582.0" prefWidth="1319.0" stylesheets="@../../assets/Styles.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="164.0">
          <columns>
             <TableColumn fx:id="colCount" minWidth="9.0" prefWidth="62.0" text="#" />
             <TableColumn fx:id="colPostBy" prefWidth="307.0" text="Post By" />
@@ -24,21 +87,6 @@
             <TableColumn fx:id="colPostDataTime" minWidth="9.0" prefWidth="188.0" text="Date and Time" />
          </columns>
       </TableView>
-      <Text layoutX="99.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FaceBook Post Scrapping" wrappingWidth="300.13671875" AnchorPane.leftAnchor="99.0" AnchorPane.rightAnchor="950.0">
-         <font>
-            <Font name="Book Antiqua Bold" size="19.0" />
-         </font></Text>
-      <Text fx:id="txtDate" layoutX="1153.0" layoutY="27.0" nodeOrientation="RIGHT_TO_LEFT" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="179.13671875" AnchorPane.rightAnchor="17.0" />
-      <TextField fx:id="txtSearch" layoutX="90.0" layoutY="112.0" prefHeight="25.0" prefWidth="1142.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="117.814453125" />
-      <ImageView fitHeight="71.0" fitWidth="61.0" layoutX="26.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../assets/pngtree-facebook-logo-facebook-icon-png-image_3566127.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="imgFullScreen" fitHeight="25.0" fitWidth="24.0" layoutX="1303.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="22.13671875">
-         <image>
-            <Image url="@../../assets/fullS.png" />
-         </image>
-      </ImageView>
+      <Text fx:id="txtSqu" layoutX="902.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" AnchorPane.leftAnchor="901.13671875" AnchorPane.rightAnchor="425.0" />
    </children>
 </AnchorPane>

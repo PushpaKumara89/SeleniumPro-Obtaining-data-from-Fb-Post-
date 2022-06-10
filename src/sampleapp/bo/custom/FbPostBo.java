@@ -12,4 +12,7 @@ public interface FbPostBo extends SuperBo {
     public boolean deletePost(Integer id) throws ClassNotFoundException, SQLException;
     public PostDTO grtPost(Integer id) throws ClassNotFoundException, SQLException;
     public ArrayList<PostDTO> getAllPost(String txt) throws ClassNotFoundException, SQLException;
+    public ArrayList<PostDTO> getAllForPaginate(String txt, int from, int to) throws ClassNotFoundException, SQLException;
+    public int getPostCount(String txt) throws ClassNotFoundException, SQLException;
+
 }

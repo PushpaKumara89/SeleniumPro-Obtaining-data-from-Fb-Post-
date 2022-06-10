@@ -18,12 +18,7 @@ public class ViewFactory {
     public  URL getUrl(String fileName){
         return getClass().getResource(fileName+".fxml");
     }
-    public Parent get(String fileName) {
-        try {
-            return FXMLLoader.load(getClass().getResource(fileName+".fxml"));
-        } catch (RuntimeException | IOException e) {
-            System.out.println(e);
-        }
-        return null;
+    public FXMLLoader get(String fileName) throws IOException {
+        return FXMLLoader.load(getClass().getResource(fileName+".fxml"));
     }
 }

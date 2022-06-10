@@ -10,7 +10,7 @@ public class DBConnection {
 
     private DBConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        this.connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/face_book_post_reader", "root", "1234");
+        this.connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/fb_selenium", "root", "1234");
     }
 
     public static DBConnection getInstance() throws SQLException, ClassNotFoundException {

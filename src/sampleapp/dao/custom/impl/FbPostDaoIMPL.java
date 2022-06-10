@@ -4,7 +4,6 @@ import sampleapp.dao.CurdUtil;
 import sampleapp.dao.Status;
 import sampleapp.dao.custom.FBPostDao;
 import sampleapp.db.DBConnection;
-import sampleapp.dto.PostDTO;
 import sampleapp.entty.PostFB;
 
 import java.sql.*;
@@ -57,6 +56,28 @@ public class FbPostDaoIMPL implements FBPostDao {
     @Override
     public ArrayList<PostFB> getAll(String txt) throws ClassNotFoundException, SQLException {
         ResultSet rst = CurdUtil.execute("SELECT * FROM post WHERE post_by LIKE '%"+txt+"%' OR massage LIKE '%"+txt+"%'");
+        return getArrayList(rst);
+    }
+
+
+    @Override
+    public ArrayList<PostFB> getAllForPaginate(String txt, int from, int to) throws ClassNotFoundException, SQLException {
+        ResultSet rst = CurdUtil.execute("SELECT * FROM post WHERE post_by LIKE '%"+txt+"%' OR massage LIKE '%"+txt+"%' ORDER BY id DESC LIMIT "+from+","+to);
+        return getArrayList(rst);
+    }
+
+    @Override
+    public int getPostCount(String txt) throws ClassNotFoundException, SQLException {
+        ResultSet rst=CurdUtil.execute("SELECT COUNT(*) from Post WHERE post_by LIKE '%"+txt+"%' OR massage LIKE '%"+txt+"%'");
+        if (rst.next()){
+            return rst.getInt(1);
+        }
+        return 0;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    private static ArrayList<PostFB> getArrayList(ResultSet rst) throws SQLException, ClassNotFoundException {
         ArrayList<PostFB> list = new ArrayList<>();
         for (int i = 0; rst.next(); i++) {
             ResultSet rst1 = CurdUtil.execute("SELECT url FROM post_url WHERE post_id=?",rst.getInt(1));
@@ -68,7 +89,6 @@ public class FbPostDaoIMPL implements FBPostDao {
         }
         return list;
     }
-
     private static boolean addPost_url(int post_id, ArrayList<String> imgURL) throws SQLException, ClassNotFoundException {
         for (int i = 0; i < imgURL.size(); i++) {
             Status status = CurdUtil.execute("INSERT INTO post_url VALUES(?,?,?)",null,post_id,imgURL.get(i));

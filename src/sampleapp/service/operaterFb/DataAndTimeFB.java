@@ -38,9 +38,6 @@ public class DataAndTimeFB {
                         month--;
                     }
 
-                    System.out.println(day);
-                    System.out.println(hr);
-
                     LocalDateTime ofDate = LocalDateTime.of(now.getYear(),month,day,hr,0);
                     return DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(ofDate);
 
@@ -78,6 +75,4 @@ public class DataAndTimeFB {
         }
      return null;
     }
-
-
 }

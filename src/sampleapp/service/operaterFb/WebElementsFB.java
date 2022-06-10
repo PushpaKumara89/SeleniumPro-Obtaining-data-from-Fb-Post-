@@ -11,15 +11,25 @@ public class WebElementsFB {
     private List<WebElement> date;
     private List<WebElement> videoUrl;
 
+
     public WebElementsFB() {
     }
 
+    @Deprecated
     public WebElementsFB(String post_by, List<WebElement> text, List<WebElement> imgUrl, List<WebElement> date, List<WebElement> videoUrl) {
         this.post_by = post_by;
         this.text = text;
         this.imgUrl = imgUrl;
         this.date = date;
         this.setVideoUrl(videoUrl);
+    }
+
+
+    public WebElementsFB(String post_by, List<WebElement> text, List<WebElement> imgUrl, List<WebElement> date) {
+        this.post_by = post_by;
+        this.text = text;
+        this.imgUrl = imgUrl;
+        this.date = date;
     }
 
     public boolean is_verified(){
@@ -58,10 +68,12 @@ public class WebElementsFB {
         this.date = date;
     }
 
+    @Deprecated
     public List<WebElement> getVideoUrl() {
         return videoUrl;
     }
 
+    @Deprecated
     public void setVideoUrl(List<WebElement> videoUrl) {
         this.videoUrl = videoUrl;
     }

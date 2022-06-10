@@ -34,10 +34,24 @@ public class FbPostBoIMPL implements FbPostBo {
     @Override
     public ArrayList<PostDTO> getAllPost(String txt) throws ClassNotFoundException, SQLException {
         ArrayList<PostFB> all = dao.getAll(txt);
-        ArrayList<PostDTO> list = new ArrayList<>();
-        for (PostFB p: all) {
-            list.add(new PostDTO(p.getTime(),p.getPost_by(),p.getMassage(), p.getImgURL()));
+        return getDtoList(all);
+    }
+
+    @Override
+    public ArrayList<PostDTO> getAllForPaginate(String txt, int from, int to) throws ClassNotFoundException, SQLException {
+        ArrayList<PostFB> list = dao.getAllForPaginate(txt, from, to);
+        return getDtoList(list);
+    }
+
+    @Override
+    public int getPostCount(String txt) throws ClassNotFoundException, SQLException {
+        return dao.getPostCount(txt);
+    }
+    private ArrayList<PostDTO> getDtoList(ArrayList<PostFB> list){
+        ArrayList<PostDTO> dto = new ArrayList<>();
+        for (PostFB p: list) {
+            dto.add(new PostDTO(p.getTime(),p.getPost_by(),p.getMassage(), p.getImgURL()));
         }
-        return list;
+        return dto;
     }
 }

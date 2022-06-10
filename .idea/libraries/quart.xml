@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="quart">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/qtuartz/c3p0-0.9.5.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/qtuartz/log4j-1.2.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/qtuartz/quartz-2.4.0-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/qtuartz/quartz-jobs-2.4.0-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/qtuartz/slf4j-api-1.7.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/qtuartz/slf4j-log4j12-1.7.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
